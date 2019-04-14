@@ -134,7 +134,7 @@ function isTriangle(a,b,c) {
  *  
  */
 function doRectanglesOverlap(rect1, rect2) {
-    throw new Error('Not implemented');
+    //throw new Error('Not implemented');
     let xmin1 = rect1.left;
     let ymin1 = rect1.top;
     let xmax1 = xmin1+rect1.width;
@@ -147,11 +147,11 @@ function doRectanglesOverlap(rect1, rect2) {
 
 
     let aLeftOfB = (xmin1>xmin2 && xmin1<xmax2) || (xmin2>xmin2 && xmin2<xmax2);
-    let aRightOfB = right1 > right2;
-    let aAboveB = top1 > top2;
-    let aBelowB = bottom1 < bottom2;
+    let aRightOfB = ymin1 > ymin2;
+    let aAboveB = xmax1 > xmax2;
+    let aBelowB = ymax1 < ymax2;
 
-return !( aLeftOfB || aRightOfB || aAboveB || aBelowB );
+//return !( aLeftOfB || aRightOfB || aAboveB || aBelowB );
     throw new Error('Not implemented');
 }
 
@@ -234,7 +234,15 @@ function findFirstSingleChar(str) {
  *
  */
 function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
-    throw new Error('Not implemented');
+    let intervalStr = "";
+    intervalStr +=  (isStartIncluded) ? '[' : '(';
+    if (a<b){
+        intervalStr  += a+", "+b;
+    }else{
+        intervalStr  += b+", "+a;
+    }
+    intervalStr +=  (isEndIncluded) ? ']' : ')';
+    return intervalStr;
 }
 
 
@@ -405,7 +413,39 @@ function isBracketsBalanced(str) {
  *
  */
 function timespanToHumanString(startDate, endDate) {
-    throw new Error('Not implemented');
+    let seconds = (endDate-startDate)/1000;
+    let minutes = seconds/60;
+    let hours = minutes/60;
+    let days = hours/24;
+
+    if(seconds<=45){
+        return  'a few seconds ago';
+    }else if (seconds <= 90){
+        return  'a minute ago';
+    }else if (minutes <= 45){
+        let message = Math.trunc(minutes) == 1 ? 2 : Math.trunc(minutes);
+        return message+" minutes ago";
+    }else if (minutes <= 90){
+        return  'an hour ago';
+    }else if (hours <= 22){
+        let message = (hours % 1 == 0.5) ?  Math.trunc(hours) : Math.round(hours);
+        return message+" hours ago";
+    }else if(hours <= 36){
+        return  'a day ago';
+    }else if (days <= 25){
+        let message = (days % 1 == 0.5) ?  Math.trunc(days) : Math.round(days);
+        return message+" days ago";
+    }else if(days <= 45){
+        return  'a month ago';
+    }else if (days <= 345){
+        let message = ((days/30) % 1 == 0.5) ?  Math.trunc(days/30) : Math.round(days/30);
+        return message+" months ago";
+    }else if(days <= 545){
+        return  'a year ago';
+    }else {
+        let message = ((days/365) % 1 == 0.5) ?  Math.trunc(days/365) : Math.round(days/365);
+        return message+" years ago";
+    }
 }
 
 
@@ -429,7 +469,21 @@ function timespanToHumanString(startDate, endDate) {
  *    365, 10 => '365'
  */
 function toNaryString(num, n) {
-    throw new Error('Not implemented');
+    let setNumbers = new Array(n)
+                        .fill(0)
+                        .map((value,idn)=>idn);
+    
+    let valueInNewBase = [];
+    let base = setNumbers.length;
+    
+    while(num>=base){
+      let intValue = Math.trunc(num/base);
+      valueInNewBase.push(setNumbers[num-intValue*base]);
+      num = intValue;
+    }
+    valueInNewBase.push(setNumbers[num]);
+    valueInNewBase.reverse();
+    return valueInNewBase.join('');
 }
 
 
@@ -446,15 +500,26 @@ function toNaryString(num, n) {
  *   ['/web/favicon.ico', '/web-scripts/dump', '/webalizer/logs'] => '/'
  */
 function getCommonDirectoryPath(pathes) {
-    throw new Error('Not implemented');
+    
     pathes = pathes.map(v=>v.split("/"));
-    let size = pathes.map(v=>v.length);
-    let len = Math.min(...size);
+    let countLevelsOfDirs = pathes.map(v=>v.length);
+    let minLevelsOfDirs = Math.min(...countLevelsOfDirs);
     let retunPatch = "";
-    pathes.forEach(patch=>{
-
-    })
-
+    for(let i = 0; i < minLevelsOfDirs; i++){
+        let similar = true;
+        let dirs = [];
+        pathes.forEach((val)=>{
+            dirs = new Set(dirs);
+            dirs.add(val[i]);
+        });
+        dirs = Array.from(dirs);
+        if (dirs.length == 1){
+            retunPatch += dirs[0]+"/";
+        }else{
+            return retunPatch;
+        }
+    }
+    return retunPatch;
     
 }
 
@@ -532,6 +597,14 @@ function getMatrixProduct(m1, m2) {
  */
 function evaluateTicTacToePosition(position) {
     throw new Error('Not implemented');
+    function checkPositions(val,arr){
+        for (let i = 0; i<3;i++){
+            let lines = arr[i].filter(v=> v==val);
+            let row = arr.filter(v=> v[i]==val);
+            
+        }
+    }
+    
 }
 
 

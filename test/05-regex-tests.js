@@ -8,15 +8,13 @@ describe('05-regex-tasks', function() {
 
     it.optional('getRegexForGuid should match the valid GUID', function () {
         var result = tasks.getRegexForGuid();
-        console.log(result);
+
         [
             '{3F2504E0-4F89-41D3-9A0C-0305E82C3301}',
             '{21EC2020-3AEA-4069-A2DD-08002B30309D}',
             '{0c74f13f-fa83-4c48-9b33-68921dd72463}'
         ].forEach((str) => {
-            console.log(str);
             assert(
-                
                 result.test(str),
                 `regex does not match '${str}'`
             );
@@ -30,10 +28,7 @@ describe('05-regex-tasks', function() {
             '0c74f13f-fa83-4c48-9b33-68921dd72463',
             'The roof, the roof, the roof is on fire'
         ].forEach((str) => {
-            console.log(str);
-            console.log(result.test(str).toString());
              assert(
-                
                  result.test(str) == false,
                 `regex matches '${str}'`
              );

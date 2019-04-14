@@ -19,6 +19,11 @@
 function createCompassPoints() {
     throw new Error('Not implemented');
     var sides = ['N','E','S','W'];  // use array of cardinal directions only!
+    sides = sides.map((val,i)=>{
+       return ({abbreviation:val, azimut:90*i})
+    });
+    console.log(sides);
+    
 }
 
 
@@ -57,6 +62,11 @@ function createCompassPoints() {
  */
 function* expandBraces(str) {
     throw new Error('Not implemented');
+    let reg =  new RegExp("{(.*)}");
+
+    console.log(reg.exec(val));
+    console.log(reg);
+    
 }
 
 
@@ -88,6 +98,28 @@ function* expandBraces(str) {
  *
  */
 function getZigZagMatrix(n) {
+    let arr = new Array(n)
+                    .fill(0)
+                    .map(v=>new Array(n).fill(0));
+    let start = 0;
+    let end = n*n-1;
+    let reverse = 1;
+
+    for(let i =0; i<n; i++){
+        for (let j = 0; j <= i; j++){
+            if (reverse<1){
+                 arr[j][i-j] = start++;
+                
+                arr[n-1-j][n-1-i+j] = end--;
+            }else{
+                arr[i-j][j] = start++;
+                arr[n-1-i+j][n-1-j] = end--;
+            }
+        }
+        reverse *= -1; 
+    }
+  
+    return arr;
     throw new Error('Not implemented');
 }
 
@@ -137,31 +169,82 @@ function canDominoesMakeRow(dominoes) {
  * [ 1, 2, 4, 5]          => '1,2,4,5'
  */
 function extractRanges(nums) {
-    throw new Error('Not implemented');
-    let tmpArr = [];
-    let retStr = "";
-    let lastInserted = undefined;
-    nums.forEach(a=>{
-        if (tmpArr.length == 0 || lastInserted+1 == a){
-            tmpArr.push(a);
-            lastInserted = a;
-        }else{
-            if(tmpArr.length>2){
-                retStr += tmpArr.shift().toString()+"-"+tmpArr.pop().toString()+",";
-            }else{
-                retStr += tmpArr.toString()+",";
-            }
+    // console.log(nums);
+    // // throw new Error('Not implemented');
+    // let shortSeqv = "";
+    // let longSeqv = "";
+    // let prevNum = nums.shift();
+    // let lenSeqv = 1;
+    // let retStr = "";
 
-            tmpArr = Array.form(a);
-            lastInserted = a;
-        }
-        if(tmpArr.length>2){
-            retStr += tmpArr.shift().toString()+"-"+tmpArr.pop().toString()+",";
-        }else{
-            retStr += tmpArr.toString()+",";
-        }
-    });
-    return retStr;
+    // console.log("result string:",retStr);
+    // nums.forEach(a=>{
+    //     shortSeqv += prevNum+",";
+    //     longSeqv = "-"+prevNum+",";
+
+    //     console.log("val:",a);
+
+    //     if (a == prevNum+1){
+    //         console.log("next:",a);
+    //         lenSeqv++;
+    //     }else{
+    //         console.log("skeep:",a);
+    //         if (lenSeqv>2){
+    //             console.log("skeep long:",a);
+    //             retStr += longSeqv;
+    //         }else{
+    //             console.log("skeep short:",a);
+    //             retStr +=  shortSeqv;
+    //         }
+    //         shortSeqv = "";
+    //         lenSeqv = 1;
+    //     }
+    //     prevNum = a;
+
+
+    //     console.log("result string:",retStr);
+    //     console.log("---------------------");
+    // });
+    // if (lenSeqv>2){
+    //     console.log("skeep long:",prevNum);
+    //     retStr += "-"+prevNum;
+    // }else{
+    //     console.log("skeep short:",prevNum);
+    //     retStr +=  shortSeqv+prevNum;
+    // }
+    // console.log("result string:",retStr);
+    // return retStr;
+
+
+    // let lastInserted = undefined;
+    // nums.forEach(a=>{
+    //     console.log("val:",a);
+        
+    //     if (tmpArr.length == 0 || lastInserted+1 == a){
+    //         console.log("added:",a);
+    //         tmpArr.push(a);
+    //         lastInserted = a;
+    //         console.log("arr tmp:",tmpArr);
+    //     }else{
+    //         console.log("skipped:",a);
+    //         if(tmpArr.length>2){
+    //             retStr += tmpArr.shift()+"-"+tmpArr.pop()+",";
+    //         }else{
+                
+    //             retStr += tmpArr+",";
+    //         }
+    //         console.log("arr tmp:",tmpArr);
+    //         tmpArr = Array.from(a);
+    //         lastInserted = a;
+    //     }
+    //     console.log("str:",retStr);
+    // });
+    // if(tmpArr.length>2){
+    //     retStr += tmpArr.shift()+"-"+tmpArr.pop()+",";
+    // }else{
+    //     retStr += tmpArr+",";
+    // }
+    // return retStr.slice(0,-1);
 
 }
 
