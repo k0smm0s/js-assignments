@@ -34,6 +34,41 @@
  *
  */
 function parseBankAccount(bankAccount) {
+    let numsEtalon =        ' _     _  _     _  _  _  _  _ \n'+
+                            '| |  | _| _||_||_ |_   ||_||_|\n'+ 
+                            '|_|  ||_  _|  | _||_|  ||_| _|\n';
+
+    numsEtalon = numsEtalon.match(/.{30}/g);
+    bankAccount = bankAccount.match(/.{27}/g);
+
+    function trimNumber(str,position){
+        let outputStr = '';
+        for(let j = 0; j < 3; j++){
+            for (let i = position; i<position+3;i++){
+                outputStr += str[j][i];
+            }
+        }
+        return outputStr;
+    }
+
+    let etalon = [];
+    for (let i = 0; i<10; i++){
+        etalon.push(trimNumber(numsEtalon, i*3));
+    }
+
+    let bankAccNum = "";
+    for (let i = 0; i<9; i++){
+        bankAccNum += etalon.indexOf(trimNumber(bankAccount, i*3)).toString();
+    }
+
+    return bankAccNum;
+
+    
+
+    
+
+    console.log(bankAccount);
+
     throw new Error('Not implemented');
 }
 

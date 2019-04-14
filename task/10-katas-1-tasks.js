@@ -108,8 +108,7 @@ function getZigZagMatrix(n) {
     for(let i =0; i<n; i++){
         for (let j = 0; j <= i; j++){
             if (reverse<1){
-                 arr[j][i-j] = start++;
-                
+                arr[j][i-j] = start++;
                 arr[n-1-j][n-1-i+j] = end--;
             }else{
                 arr[i-j][j] = start++;
@@ -169,83 +168,25 @@ function canDominoesMakeRow(dominoes) {
  * [ 1, 2, 4, 5]          => '1,2,4,5'
  */
 function extractRanges(nums) {
-    // console.log(nums);
-    // // throw new Error('Not implemented');
-    // let shortSeqv = "";
-    // let longSeqv = "";
-    // let prevNum = nums.shift();
-    // let lenSeqv = 1;
-    // let retStr = "";
+   
+    let accum = [];
+    let result = [];
 
-    // console.log("result string:",retStr);
-    // nums.forEach(a=>{
-    //     shortSeqv += prevNum+",";
-    //     longSeqv = "-"+prevNum+",";
-
-    //     console.log("val:",a);
-
-    //     if (a == prevNum+1){
-    //         console.log("next:",a);
-    //         lenSeqv++;
-    //     }else{
-    //         console.log("skeep:",a);
-    //         if (lenSeqv>2){
-    //             console.log("skeep long:",a);
-    //             retStr += longSeqv;
-    //         }else{
-    //             console.log("skeep short:",a);
-    //             retStr +=  shortSeqv;
-    //         }
-    //         shortSeqv = "";
-    //         lenSeqv = 1;
-    //     }
-    //     prevNum = a;
-
-
-    //     console.log("result string:",retStr);
-    //     console.log("---------------------");
-    // });
-    // if (lenSeqv>2){
-    //     console.log("skeep long:",prevNum);
-    //     retStr += "-"+prevNum;
-    // }else{
-    //     console.log("skeep short:",prevNum);
-    //     retStr +=  shortSeqv+prevNum;
-    // }
-    // console.log("result string:",retStr);
-    // return retStr;
-
-
-    // let lastInserted = undefined;
-    // nums.forEach(a=>{
-    //     console.log("val:",a);
-        
-    //     if (tmpArr.length == 0 || lastInserted+1 == a){
-    //         console.log("added:",a);
-    //         tmpArr.push(a);
-    //         lastInserted = a;
-    //         console.log("arr tmp:",tmpArr);
-    //     }else{
-    //         console.log("skipped:",a);
-    //         if(tmpArr.length>2){
-    //             retStr += tmpArr.shift()+"-"+tmpArr.pop()+",";
-    //         }else{
+    nums.forEach((value,ind)=>{
+        accum.push(value);
+        if (value+1 != nums[ind+1]){
+            if(accum.length > 2) {
+                accum.push(value);
+                result.push(accum[0]+'-'+accum.pop());
+            } else {
+                result.push(accum);
                 
-    //             retStr += tmpArr+",";
-    //         }
-    //         console.log("arr tmp:",tmpArr);
-    //         tmpArr = Array.from(a);
-    //         lastInserted = a;
-    //     }
-    //     console.log("str:",retStr);
-    // });
-    // if(tmpArr.length>2){
-    //     retStr += tmpArr.shift()+"-"+tmpArr.pop()+",";
-    // }else{
-    //     retStr += tmpArr+",";
-    // }
-    // return retStr.slice(0,-1);
+            }
+            accum = [];
+        }
+    });
 
+	return result.join(',');
 }
 
 module.exports = {
